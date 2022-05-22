@@ -4,6 +4,7 @@ import Categories from "./components/categories";
 import Header from "./components/header";
 import Sorting from "./components/sorting";
 import "./scss/app.scss";
+import pizzasArray from "./assets/pizzas.json";
 
 const App = () => {
 	return (
@@ -17,8 +18,9 @@ const App = () => {
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
-						<PizzaBlock />
-						<PizzaBlock />
+						{pizzasArray.map((obj) => (
+							<PizzaBlock {...obj} />
+						))}
 					</div>
 				</div>
 			</div>
