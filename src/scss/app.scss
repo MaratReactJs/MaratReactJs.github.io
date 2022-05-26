@@ -3,308 +3,342 @@
 @import "./components/all";
 
 body {
-  background-color: $background;
+	background-color: $background;
 }
 
 .wrapper {
-  width: calc(100vw - 100px);
-  height: 100%;
-  background-color: #fff;
-  margin: 50px auto;
-  border-radius: 10px;
-  max-width: 1400px;
+	width: calc(100vw - 100px);
+	height: 100%;
+	background-color: #fff;
+	margin: 50px auto;
+	border-radius: 10px;
+	max-width: 1400px;
+
+	@media (max-width: 645px) {
+		width: calc(100vw - 30px);
+		margin-top: 20px;
+	}
 }
 
 .content {
-  padding: 40px 0;
+	padding: 40px 0;
 
-  &__title {
-    margin: 35px 0;
-  }
+	&__title {
+		font-weight: 800;
+		font-size: 38px;
+		margin-top: 60px;
+		margin-bottom: 50px;
+	}
 
-  &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+	&__items {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-column-gap: 11px;
 
-  &__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+		@media (max-width: 1400px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@media (max-width: 1060px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (max-width: 730px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+
+	&__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		@media (max-width: 1290px) {
+			flex-direction: column;
+
+			.categories {
+				margin-bottom: 30px;
+			}
+		}
+	}
 }
 
 .container {
-  width: $container-width;
-  margin: 0 auto;
+	width: $container-width;
+	margin: 0 auto;
 
-  &--cart {
-    max-width: 820px;
-    margin: 90px auto;
-    .content__title {
-      margin: 0;
-    }
-  }
+	&--cart {
+		max-width: 820px;
+		margin: 90px auto;
+		.content__title {
+			margin: 0;
+		}
+	}
 }
 
 .cart {
-  &__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+	&__top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
-  .content__title {
-    display: flex;
-    align-items: center;
-    font-size: 32px;
+	.content__items {
+		display: flex;
+		flex-direction: column;
+	}
 
-    svg {
-      position: relative;
-      top: -2px;
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
-      path {
-        stroke: $black;
-        stroke-width: 1.9;
-      }
-    }
-  }
+	.content__title {
+		display: flex;
+		align-items: center;
+		font-size: 32px;
 
-  &__clear {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    @include noselect();
+		svg {
+			position: relative;
+			top: -2px;
+			width: 30px;
+			height: 30px;
+			margin-right: 10px;
+			path {
+				stroke: $black;
+				stroke-width: 1.9;
+			}
+		}
+	}
 
-    span {
-      display: inline-block;
-      margin-left: 7px;
-      color: #b6b6b6;
-      font-size: 18px;
-    }
+	&__clear {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		@include noselect();
 
-    span,
-    svg,
-    path {
-      transition: all $duration ease-in-out;
-    }
+		span {
+			display: inline-block;
+			margin-left: 7px;
+			color: #b6b6b6;
+			font-size: 18px;
+		}
 
-    &:hover {
-      svg {
-        path {
-          stroke: darken($color: #b6b6b6, $amount: 50);
-        }
-      }
-      span {
-        color: darken($color: #b6b6b6, $amount: 50);
-      }
-    }
-  }
+		span,
+		svg,
+		path {
+			transition: all $duration ease-in-out;
+		}
 
-  &__item {
-    display: flex;
-    width: 100%;
-    border-top: 1px solid $gray-line;
-    padding-top: 30px;
-    margin-top: 30px;
+		&:hover {
+			svg {
+				path {
+					stroke: darken($color: #b6b6b6, $amount: 50);
+				}
+			}
+			span {
+				color: darken($color: #b6b6b6, $amount: 50);
+			}
+		}
+	}
 
-    &-img {
-      display: flex;
-      align-items: center;
-      margin-right: 15px;
-      width: 10%;
+	&__item {
+		display: flex;
+		width: 100%;
+		border-top: 1px solid $gray-line;
+		padding-top: 30px;
+		margin-top: 30px;
 
-      img {
-        width: 80px;
-        height: 80px;
-      }
-    }
+		&-img {
+			display: flex;
+			align-items: center;
+			margin-right: 15px;
+			width: 10%;
 
-    &-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 40%;
+			img {
+				width: 80px;
+				height: 80px;
+			}
+		}
 
-      h3 {
-        font-weight: bold;
-        font-size: 22px;
-        line-height: 27px;
-        letter-spacing: 0.01em;
-      }
+		&-info {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 40%;
 
-      p {
-        font-size: 18px;
-        color: #8d8d8d;
-      }
-    }
+			h3 {
+				font-weight: bold;
+				font-size: 22px;
+				line-height: 27px;
+				letter-spacing: 0.01em;
+			}
 
-    &-count {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 13%;
+			p {
+				font-size: 18px;
+				color: #8d8d8d;
+			}
+		}
 
-      &-minus {
-        svg {
-          path:first-of-type {
-            display: none;
-          }
-        }
-      }
+		&-count {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 13%;
 
-      b {
-        font-size: 22px;
-      }
-    }
+			&-minus {
+				svg {
+					path:first-of-type {
+						display: none;
+					}
+				}
+			}
 
-    &-price {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 33%;
+			b {
+				font-size: 22px;
+			}
+		}
 
-      b {
-        font-weight: bold;
-        font-size: 22px;
-        letter-spacing: 0.01em;
-      }
-    }
+		&-price {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 33%;
 
-    &-remove {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      width: 4%;
+			b {
+				font-weight: bold;
+				font-size: 22px;
+				letter-spacing: 0.01em;
+			}
+		}
 
-      .button {
-        border-color: darken($color: $gray-line, $amount: 10);
-      }
+		&-remove {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			width: 4%;
 
-      svg {
-        transform: rotate(45deg);
+			.button {
+				border-color: darken($color: $gray-line, $amount: 10);
+			}
 
-        path {
-          fill: darken($color: $gray-line, $amount: 15);
-        }
-      }
+			svg {
+				transform: rotate(45deg);
 
-      .button {
-        svg {
-          width: 11.5px;
-          height: 11.5px;
-          position: relative;
-        }
-        &:hover,
-        &:active {
-          border-color: darken($color: $gray-line, $amount: 80);
-          background-color: darken($color: $gray-line, $amount: 80);
-        }
-      }
-    }
-  }
+				path {
+					fill: darken($color: $gray-line, $amount: 15);
+				}
+			}
 
-  &__bottom {
-    margin: 50px 0;
+			.button {
+				svg {
+					width: 11.5px;
+					height: 11.5px;
+					position: relative;
+				}
+				&:hover,
+				&:active {
+					border-color: darken($color: $gray-line, $amount: 80);
+					background-color: darken($color: $gray-line, $amount: 80);
+				}
+			}
+		}
+	}
 
-    &-details {
-      display: flex;
-      justify-content: space-between;
+	&__bottom {
+		margin: 50px 0;
 
-      span {
-        font-size: 22px;
+		&-details {
+			display: flex;
+			justify-content: space-between;
 
-        &:last-of-type {
-          b {
-            color: $orange;
-          }
-        }
-      }
-    }
+			span {
+				font-size: 22px;
 
-    &-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
+				&:last-of-type {
+					b {
+						color: $orange;
+					}
+				}
+			}
+		}
 
-      .go-back-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 210px;
+		&-buttons {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 40px;
 
-        border-color: darken($color: $gray-line, $amount: 10);
+			.go-back-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 210px;
 
-        span {
-          color: darken($color: $gray-line, $amount: 20);
-          font-weight: 500;
-          font-weight: 600;
-        }
+				border-color: darken($color: $gray-line, $amount: 10);
 
-        &:hover {
-          background-color: darken($color: $gray-line, $amount: 90);
-          border-color: darken($color: $gray-line, $amount: 90);
+				span {
+					color: darken($color: $gray-line, $amount: 20);
+					font-weight: 500;
+					font-weight: 600;
+				}
 
-          span {
-            color: $gray-line;
-          }
-        }
+				&:hover {
+					background-color: darken($color: $gray-line, $amount: 90);
+					border-color: darken($color: $gray-line, $amount: 90);
 
-        svg {
-          margin-right: 12px;
-          path {
-            fill: transparent;
-            stroke-width: 2;
-          }
-        }
-      }
+					span {
+						color: $gray-line;
+					}
+				}
 
-      .pay-btn {
-        font-size: 16px;
-        font-weight: 600;
-        width: 210px;
-        padding: 16px;
-      }
-    }
-  }
+				svg {
+					margin-right: 12px;
+					path {
+						fill: transparent;
+						stroke-width: 2;
+					}
+				}
+			}
 
-  &--empty {
-    margin: 0 auto;
-    width: 560px;
-    text-align: center;
+			.pay-btn {
+				font-size: 16px;
+				font-weight: 600;
+				width: 210px;
+				padding: 16px;
+			}
+		}
+	}
 
-    h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+	&--empty {
+		margin: 0 auto;
+		width: 560px;
+		text-align: center;
 
-    p {
-      font-size: 18px;
-      line-height: 145.4%;
-      letter-spacing: 0.01em;
-      color: #777777;
-    }
+		h2 {
+			font-size: 32px;
+			margin-bottom: 10px;
+		}
 
-    icon {
-      position: relative;
-      top: 2px;
-    }
+		p {
+			font-size: 18px;
+			line-height: 145.4%;
+			letter-spacing: 0.01em;
+			color: #777777;
+		}
 
-    img {
-      display: block;
-      width: 300px;
-      margin: 45px auto 60px;
-    }
+		icon {
+			position: relative;
+			top: 2px;
+		}
 
-    .button--black {
-      padding: 12px 0 14px;
-      width: 230px;
-      margin: 0 auto;
-      font-weight: 600;
-      font-size: 18px;
-    }
-  }
+		img {
+			display: block;
+			width: 300px;
+			margin: 45px auto 60px;
+		}
+
+		.button--black {
+			padding: 12px 0 14px;
+			width: 230px;
+			margin: 0 auto;
+			font-weight: 600;
+			font-size: 18px;
+		}
+	}
 }
