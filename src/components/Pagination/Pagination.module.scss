@@ -12,20 +12,20 @@
 	}
 
 	& :hover {
+		color: #fff;
 		background-color: #fe5f1e;
-
-		a {
-			color: #fff;
-		}
 	}
 
 	a {
-		color: #fe5f1e;
+		width: 44px;
+		height: 44px;
+		display: inline-block;
+		border-radius: 30px;
+	}
+	:global {
+		.selected {
+			background-color: #fe5f1e;
+			color: #fff;
+		}
 	}
 }
-
-/* :global {
-	.previous {
-		background-color: red;
-	}
-} */
