@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import PizzaBlock from "../components/PizzaBlock";
-import Categories from "../components/Categories";
-import Sorting from "../components/Sorting";
-import Skeleton from "../components//PizzaBlock/Skeleton";
+import Categories from "../components/categories";
+import Sorting from "../components/sorting";
+import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 
