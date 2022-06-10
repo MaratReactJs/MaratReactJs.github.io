@@ -19,7 +19,6 @@ const Sorting = ({ value, onChangeSort }) => {
 	const handleSelected = (i) => {
 		onChangeSort(i);
 		setOpen();
-		console.log("что это", i);
 	};
 
 	return (

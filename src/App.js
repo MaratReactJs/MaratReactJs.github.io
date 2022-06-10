@@ -5,8 +5,10 @@ import Header from "./components/header";
 import Home from "./pages/home";
 import Cart from "./pages/cart";
 import NotFound from "./pages/notFound";
-
 import "./scss/app.scss";
+
+import { store } from "./redux/store";
+console.log(store);
 
 export const SearchContext = createContext();
 
