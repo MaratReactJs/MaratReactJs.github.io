@@ -1,23 +1,26 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { setSort } from "../redux/slices/filterSlice";
 
-const Sorting = ({ value, onChangeSort }) => {
+const menuSort = [
+	// с помощью минуса создаем уникальность
+	{ name: "популярности (DESC)", sortProperty: "rating" },
+	{ name: "популярности (ASC)", sortProperty: "-rating" },
+	{ name: "цене (DESC)", sortProperty: "price" },
+	{ name: "цене (ASC)", sortProperty: "-price" },
+	{ name: "алфавиту (DESC)", sortProperty: "title" },
+	{ name: "алфавиту (ASC)", sortProperty: "-title" },
+];
+
+const Sorting = () => {
+	const dispatch = useDispatch();
+	const sort = useSelector((state) => state.filterSlice.sort);
 	// состояние для popup
 	const [open, setOpen] = useState(false);
 
-	// меню сортировки
-	const menuSort = [
-		// с помощью минуса создаем уникальность
-		{ name: "популярности (DESC)", sortProperty: "rating" },
-		{ name: "популярности (ASC)", sortProperty: "-rating" },
-		{ name: "цене (DESC)", sortProperty: "price" },
-		{ name: "цене (ASC)", sortProperty: "-price" },
-		{ name: "алфавиту (DESC)", sortProperty: "title" },
-		{ name: "алфавиту (ASC)", sortProperty: "-title" },
-	];
-
 	// функция выбора свойства сортировки
-	const handleSelected = (i) => {
-		onChangeSort(i);
+	const handleSelected = (obj) => {
+		dispatch(setSort(obj));
 		setOpen();
 	};
 
@@ -36,7 +39,7 @@ const Sorting = ({ value, onChangeSort }) => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setOpen(!open)}>{value.name}</span>
+				<span onClick={() => setOpen(!open)}>{sort.name}</span>
 			</div>
 			{open && (
 				<div className="sort__popup">
@@ -47,7 +50,7 @@ const Sorting = ({ value, onChangeSort }) => {
 									handleSelected(obj);
 								}}
 								className={
-									value.sortProperty === obj.sortProperty ? "active" : ""
+									sort.sortProperty === obj.sortProperty ? "active" : ""
 								}
 								key={i}>
 								{obj.name}
