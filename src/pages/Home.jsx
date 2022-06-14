@@ -25,7 +25,7 @@ const Home = () => {
 	const sortBy = sort.sortProperty.replace("-", "");
 	const order = sort.sortProperty.includes("-") ? "asc" : "desc";
 	const category = categoryId > 0 ? `category=${categoryId}` : "";
-	const search = searchValue ? `&search=${searchValue}` : "";
+	const search = searchValue ? `search=${searchValue}` : "";
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
@@ -40,7 +40,7 @@ const Home = () => {
 		setIsLoading(true);
 		axios
 			.get(
-				`https://628baebb667aea3a3e34800b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+				`https://628baebb667aea3a3e34800b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
 			)
 			.then((res) => {
 				setItems(res.data);
