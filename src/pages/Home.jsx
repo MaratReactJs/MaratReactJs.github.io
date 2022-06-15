@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice.js";
+import axios from "axios";
+import qs from "qs"; // для сохранения ссылок на страницу
+import { useNavigate } from "react-router-dom";
+import {
+	setCategoryId,
+	setCurrentPage,
+	setFilters,
+} from "../redux/slices/filterSlice.js";
 
-import Sorting from "../components/sorting";
+import Sorting, { sortList } from "../components/sorting";
 import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/categories";
 import Skeleton from "../components/PizzaBlock/skeleton";
@@ -17,6 +23,7 @@ const Home = () => {
 		(state) => state.filterSlice
 	);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [items, setItems] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +44,18 @@ const Home = () => {
 	};
 
 	useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1));
+
+			const sort = sortList.find(
+				(obj) => obj.sortProperty === params.sortProperty
+			);
+
+			dispatch(setFilters({ ...params, sort }));
+		}
+	}, []);
+
+	useEffect(() => {
 		setIsLoading(true);
 		axios
 			.get(
@@ -47,6 +66,15 @@ const Home = () => {
 				setIsLoading(false);
 				window.scrollTo(0, 0);
 			});
+	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
+	useEffect(() => {
+		const queryString = qs.stringify({
+			sortProperty: sort.sortProperty,
+			categoryId,
+			currentPage,
+		});
+		navigate(`?${queryString}`);
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	const skeletons = [...new Array(6)].map((_, index) => (

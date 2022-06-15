@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort } from "../redux/slices/filterSlice";
 
-const menuSort = [
+export const sortList = [
 	// с помощью минуса создаем уникальность
 	{ name: "популярности (DESC)", sortProperty: "rating" },
 	{ name: "популярности (ASC)", sortProperty: "-rating" },
@@ -44,7 +44,7 @@ const Sorting = () => {
 			{open && (
 				<div className="sort__popup">
 					<ul>
-						{menuSort.map((obj, i) => (
+						{sortList.map((obj, i) => (
 							<li
 								onClick={() => {
 									handleSelected(obj);
