@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
@@ -24,11 +24,11 @@ const Home = () => {
 	);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
+	const urlParametr = useRef(false);
+	const firstRender = useRef(false);
 	const [items, setItems] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const { searchValue } = useContext(SearchContext);
-
 	const sortBy = sort.sortProperty.replace("-", "");
 	const order = sort.sortProperty.includes("-") ? "asc" : "desc";
 	const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -39,23 +39,11 @@ const Home = () => {
 		dispatch(setCurrentPage(1));
 	};
 
-	const onChangePage = (number) => {
+	const onPageNumberChange = (number) => {
 		dispatch(setCurrentPage(number));
 	};
 
-	useEffect(() => {
-		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1));
-
-			const sort = sortList.find(
-				(obj) => obj.sortProperty === params.sortProperty
-			);
-
-			dispatch(setFilters({ ...params, sort }));
-		}
-	}, []);
-
-	useEffect(() => {
+	const fetchPizzas = () => {
 		setIsLoading(true);
 		axios
 			.get(
@@ -64,17 +52,40 @@ const Home = () => {
 			.then((res) => {
 				setItems(res.data);
 				setIsLoading(false);
-				window.scrollTo(0, 0);
 			});
+		window.scrollTo(0, 0);
+	};
+	// При первом рендере проверяет URL-параметры и сохраняет в redux
+	useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1));
+			const sort = sortList.find(
+				(obj) => obj.sortProperty === params.sortProperty
+			);
+			dispatch(setFilters({ ...params, sort }));
+			urlParametr.current = true;
+		}
+	}, []);
+
+	//Если изменили параметры и был первый рендер, вшивает в адресную строчку URL-параметры
+	useEffect(() => {
+		if (firstRender.current) {
+			const queryString = qs.stringify({
+				sortProperty: sort.sortProperty,
+				categoryId,
+				currentPage,
+			});
+			navigate(`?${queryString}`);
+		}
+		firstRender.current = true;
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
+	// Если нет URL-параметров, обновляет данные при первом рендере или при изменение параметров
 	useEffect(() => {
-		const queryString = qs.stringify({
-			sortProperty: sort.sortProperty,
-			categoryId,
-			currentPage,
-		});
-		navigate(`?${queryString}`);
+		if (!urlParametr.current) {
+			fetchPizzas();
+		}
+		urlParametr.current = false;
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 	const skeletons = [...new Array(6)].map((_, index) => (
@@ -90,7 +101,10 @@ const Home = () => {
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">{isLoading ? skeletons : pizzas}</div>
-			<Pagination currentPage={currentPage} onChangePage={onChangePage} />
+			<Pagination
+				currentPage={currentPage}
+				onPageNumberChange={onPageNumberChange}
+			/>
 		</div>
 	);
 };
