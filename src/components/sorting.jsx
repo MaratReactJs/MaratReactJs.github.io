@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort } from "../redux/slices/filterSlice";
 
@@ -17,6 +17,18 @@ const Sorting = () => {
 	const sort = useSelector((state) => state.filterSlice.sort);
 	// состояние для popup
 	const [open, setOpen] = useState(false);
+	const sortRef = useRef();
+
+	//закрытие popup при клике на другую область
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (!event.path.includes(sortRef.current) && !open) {
+				setOpen();
+			}
+		};
+		document.body.addEventListener("click", handleClickOutside);
+		return () => document.body.removeEventListener("click", handleClickOutside);
+	}, []);
 
 	// функция выбора свойства сортировки
 	const handleSelected = (obj) => {
@@ -25,7 +37,7 @@ const Sorting = () => {
 	};
 
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
 					width="10"
