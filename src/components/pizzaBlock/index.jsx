@@ -6,6 +6,7 @@ const PizzaBlock = ({ id, title, price, types, sizes, imageUrl }) => {
 	const [activeType, setActiveType] = useState(0);
 	const [activeSize, setActiveSize] = useState(0);
 	const pizzasType = ["тонкое", "традиционное"];
+
 	const dispatch = useDispatch();
 
 	const onClickAdd = () => {
@@ -14,7 +15,7 @@ const PizzaBlock = ({ id, title, price, types, sizes, imageUrl }) => {
 			title,
 			price,
 			imageUrl,
-			type: activeType,
+			type: pizzasType[activeType],
 			size: activeSize,
 		};
 		dispatch(addItem(item));
