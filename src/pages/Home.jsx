@@ -43,18 +43,21 @@ const Home = () => {
 		dispatch(setCurrentPage(number));
 	};
 
-	const fetchPizzas = () => {
+	const fetchPizzas = async () => {
 		setIsLoading(true);
-		axios
-			.get(
+		try {
+			const res = await axios.get(
 				`https://628baebb667aea3a3e34800b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
-			)
-			.then((res) => {
-				setItems(res.data);
-				setIsLoading(false);
-			});
-		window.scrollTo(0, 0);
+			);
+			setItems(res.data);
+			window.scrollTo(0, 0);
+		} catch (error) {
+			alert("Ошибка при получение пицц");
+		} finally {
+			setIsLoading(false);
+		}
 	};
+
 	// При первом рендере проверяет URL-параметры и сохраняет в redux
 	useEffect(() => {
 		if (window.location.search) {
