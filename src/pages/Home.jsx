@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
-import axios from "axios";
+
 import qs from "qs"; // для сохранения ссылок на страницу
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
 	setCurrentPage,
 	setFilters,
 } from "../redux/slices/filterSlice.js";
+import { fetchPizzas } from "../redux/slices/pizzasSlice.js";
 
 import Sorting, { sortList } from "../components/sorting";
 import PizzaBlock from "../components/PizzaBlock";
@@ -22,17 +23,14 @@ const Home = () => {
 	const { categoryId, sort, currentPage } = useSelector(
 		(state) => state.filterSlice
 	);
+	const { items, status } = useSelector((state) => state.pizzasSlice);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const urlParametr = useRef(false);
 	const firstRender = useRef(false);
-	const [items, setItems] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+
 	const { searchValue } = useContext(SearchContext);
-	const sortBy = sort.sortProperty.replace("-", "");
-	const order = sort.sortProperty.includes("-") ? "asc" : "desc";
-	const category = categoryId > 0 ? `category=${categoryId}` : "";
-	const search = searchValue ? `search=${searchValue}` : "";
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
@@ -43,19 +41,14 @@ const Home = () => {
 		dispatch(setCurrentPage(number));
 	};
 
-	const fetchPizzas = async () => {
-		setIsLoading(true);
-		try {
-			const res = await axios.get(
-				`https://628baebb667aea3a3e34800b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
-			);
-			setItems(res.data);
-			window.scrollTo(0, 0);
-		} catch (error) {
-			alert("Ошибка при получение пицц");
-		} finally {
-			setIsLoading(false);
-		}
+	const getPizzas = async () => {
+		const sortBy = sort.sortProperty.replace("-", "");
+		const order = sort.sortProperty.includes("-") ? "asc" : "desc";
+		const category = categoryId > 0 ? `category=${categoryId}` : "";
+		const search = searchValue ? `search=${searchValue}` : "";
+
+		dispatch(fetchPizzas({ sortBy, order, category, search, currentPage }));
+		window.scrollTo(0, 0);
 	};
 
 	// При первом рендере проверяет URL-параметры и сохраняет в redux
@@ -86,7 +79,7 @@ const Home = () => {
 	// Если нет URL-параметров, обновляет данные при первом рендере или при изменение параметров
 	useEffect(() => {
 		if (!urlParametr.current) {
-			fetchPizzas();
+			getPizzas();
 		}
 		urlParametr.current = false;
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
@@ -103,7 +96,20 @@ const Home = () => {
 				<Sorting />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
-			<div className="content__items">{isLoading ? skeletons : pizzas}</div>
+			{status === "error" ? (
+				<div className="content_error-info">
+					<h2>Произошла ошибка {/* <icon></icon> */}</h2>
+					<p>
+						К сожалению не удалось получить питсы. Поробуйте повторить попытку
+						позже
+					</p>
+				</div>
+			) : (
+				<div className="content__items">
+					{status === "loading" ? skeletons : pizzas}
+				</div>
+			)}
+
 			<Pagination
 				currentPage={currentPage}
 				onPageNumberChange={onPageNumberChange}
