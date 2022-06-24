@@ -45,6 +45,10 @@ const cartSlice = createSlice({
 	},
 });
 
+export const selectCart = (state) => state.cartSlice;
+export const selectCartItemById = (id) => (state) =>
+	state.cartSlice.items.find((obj) => obj.id === id);
+
 // actions это  reducers, не знаю зачем переименуется здесь, Арчаков сам не знает
 export const { addItem, removeItem, minusItem, clearItem } = cartSlice.actions;
 

@@ -9,28 +9,25 @@ import {
 	setCategoryId,
 	setCurrentPage,
 	setFilters,
+	selectFilter,
 } from "../redux/slices/filterSlice.js";
-import { fetchPizzas } from "../redux/slices/pizzasSlice.js";
+import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice.js";
 
 import Sorting, { sortList } from "../components/sorting";
 import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/categories";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 
 const Home = () => {
-	const { categoryId, sort, currentPage } = useSelector(
-		(state) => state.filterSlice
-	);
-	const { items, status } = useSelector((state) => state.pizzasSlice);
+	const { categoryId, sort, currentPage, searchValue } =
+		useSelector(selectFilter);
+	const { items, status } = useSelector(selectPizzas);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const urlParametr = useRef(false);
 	const firstRender = useRef(false);
-
-	const { searchValue } = useContext(SearchContext);
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));

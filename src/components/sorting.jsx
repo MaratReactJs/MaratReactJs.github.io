@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { setSort } from "../redux/slices/filterSlice";
+import { setSort, selectSort } from "../redux/slices/filterSlice";
 
 export const sortList = [
 	// с помощью минуса создаем уникальность
@@ -14,7 +14,7 @@ export const sortList = [
 
 const Sorting = () => {
 	const dispatch = useDispatch();
-	const sort = useSelector((state) => state.filterSlice.sort);
+	const sort = useSelector(selectSort);
 	// состояние для popup
 	const [open, setOpen] = useState(false);
 	const sortRef = useRef();

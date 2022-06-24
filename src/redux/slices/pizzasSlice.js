@@ -44,6 +44,8 @@ const pizzasSlice = createSlice({
 	},
 });
 
+export const selectPizzas = (state) => state.pizzasSlice;
+
 // actions это  reducers, не знаю зачем переименуется здесь, Арчаков сам не знает
 export const { setItems } = pizzasSlice.actions;
 
