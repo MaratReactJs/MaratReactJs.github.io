@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
 import qs from "qs"; // для сохранения ссылок на страницу
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
 	setCategoryId,
 	setCurrentPage,
@@ -84,9 +84,7 @@ const Home = () => {
 		<Skeleton key={index} />
 	));
 	const pizzas = items.map((obj) => (
-		<PizzaBlock {...obj} key={obj.id}>
-			<Link to={`pizza/${obj.id}`}>{obj.title}</Link>
-		</PizzaBlock>
+		<PizzaBlock {...obj} key={obj.id}></PizzaBlock>
 	));
 
 	return (
