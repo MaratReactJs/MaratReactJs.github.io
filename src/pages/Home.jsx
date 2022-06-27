@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
-
 import qs from "qs"; // для сохранения ссылок на страницу
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
 	setCategoryId,
 	setCurrentPage,
@@ -84,7 +83,11 @@ const Home = () => {
 	const skeletons = [...new Array(6)].map((_, index) => (
 		<Skeleton key={index} />
 	));
-	const pizzas = items.map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+	const pizzas = items.map((obj) => (
+		<PizzaBlock {...obj} key={obj.id}>
+			<Link to={`pizza/${obj.id}`}>{obj.title}</Link>
+		</PizzaBlock>
+	));
 
 	return (
 		<div className="container">
