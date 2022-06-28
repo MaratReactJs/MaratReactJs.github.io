@@ -1,8 +1,5 @@
-import React from "react";
-
 import { Routes, Route } from "react-router-dom";
 
-import Header from "./components/header";
 import Home from "./pages/home";
 import Cart from "./pages/cart";
 import FullPizza from "./pages/fullPizza";
