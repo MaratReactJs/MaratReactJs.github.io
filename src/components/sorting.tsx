@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort, selectSort } from "../redux/slices/filterSlice";
 
-export const sortList = [
+type SortItem = {
+	name: string;
+	sortProperty: string;
+};
+
+export const sortList: SortItem[] = [
 	// с помощью минуса создаем уникальность
 	{ name: "популярности (DESC)", sortProperty: "rating" },
 	{ name: "популярности (ASC)", sortProperty: "-rating" },
@@ -12,28 +17,29 @@ export const sortList = [
 	{ name: "алфавиту (ASC)", sortProperty: "-title" },
 ];
 
-const Sorting = () => {
+const Sorting: React.FC = () => {
 	const dispatch = useDispatch();
 	const sort = useSelector(selectSort);
 	// состояние для popup
 	const [open, setOpen] = useState(false);
-	const sortRef = useRef();
+	const sortRef = useRef<HTMLDivElement>(null);
 
 	//закрытие popup при клике на другую область
 	useEffect(() => {
-		const handleClickOutside = (event) => {
+		const handleClickOutside = (event: any) => {
 			if (!event.path.includes(sortRef.current) && !open) {
-				setOpen();
+				setOpen(false);
 			}
+			console.log(event);
 		};
 		document.body.addEventListener("click", handleClickOutside);
 		return () => document.body.removeEventListener("click", handleClickOutside);
 	}, []);
 
 	// функция выбора свойства сортировки
-	const handleSelected = (obj) => {
+	const handleSelected = (obj: SortItem) => {
 		dispatch(setSort(obj));
-		setOpen();
+		setOpen(false);
 	};
 
 	return (

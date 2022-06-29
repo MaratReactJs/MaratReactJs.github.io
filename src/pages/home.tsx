@@ -18,7 +18,7 @@ import Categories from "../components/categories";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
 
-const Home = () => {
+const Home: React.FC = () => {
 	const { categoryId, sort, currentPage, searchValue } =
 		useSelector(selectFilter);
 	const { items, status } = useSelector(selectPizzas);
@@ -28,13 +28,13 @@ const Home = () => {
 	const urlParametr = useRef(false);
 	const firstRender = useRef(false);
 
-	const onChangeCategory = (id) => {
-		dispatch(setCategoryId(id));
+	const onChangeCategory = (idx: number) => {
+		dispatch(setCategoryId(idx));
 		dispatch(setCurrentPage(1));
 	};
 
-	const onPageNumberChange = (number) => {
-		dispatch(setCurrentPage(number));
+	const onPageNumberChange = (pageNumber: number) => {
+		dispatch(setCurrentPage(pageNumber));
 	};
 
 	const getPizzas = async () => {
@@ -43,7 +43,10 @@ const Home = () => {
 		const category = categoryId > 0 ? `category=${categoryId}` : "";
 		const search = searchValue ? `search=${searchValue}` : "";
 
-		dispatch(fetchPizzas({ sortBy, order, category, search, currentPage }));
+		dispatch(
+			//@ts-ignore
+			fetchPizzas({ sortBy, order, category, search, currentPage })
+		);
 		window.scrollTo(0, 0);
 	};
 
@@ -83,7 +86,7 @@ const Home = () => {
 	const skeletons = [...new Array(6)].map((_, index) => (
 		<Skeleton key={index} />
 	));
-	const pizzas = items.map((obj) => (
+	const pizzas = items.map((obj: any) => (
 		<PizzaBlock {...obj} key={obj.id}></PizzaBlock>
 	));
 

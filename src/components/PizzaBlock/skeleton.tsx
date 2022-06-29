@@ -2,7 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 
 // Скелетон срабатывает во время ожидания пиццы
-const Skeleton = () => (
+const Skeleton: React.FC = () => (
 	<ContentLoader
 		className="pizzaBlock"
 		speed={2}

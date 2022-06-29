@@ -6,16 +6,16 @@ import styles from "./Search.module.scss";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-const Search = () => {
+const Search: React.FC = () => {
 	// отвечает за быстрое получение данных из инпут
 	const [value, setValue] = useState("");
-	const inputRef = useRef();
+	const inputRef = useRef<HTMLInputElement>(null);
 	const dispatch = useDispatch();
 
 	const onClickClear = () => {
 		dispatch(setSearchValue(""));
 		setValue("");
-		inputRef.current.focus();
+		inputRef.current?.focus();
 	};
 
 	const updateSearchValue = useCallback(
@@ -25,9 +25,9 @@ const Search = () => {
 		[]
 	);
 
-	const onChangeInput = ({ target }) => {
-		setValue(target.value);
-		updateSearchValue(target.value);
+	const onChangeInput = (event: any) => {
+		setValue(event.target.value);
+		updateSearchValue(event.target.value);
 	};
 
 	return (
