@@ -26,8 +26,12 @@ const Sorting: React.FC = () => {
 
 	//закрытие popup при клике на другую область
 	useEffect(() => {
-		const handleClickOutside = (event: any) => {
-			if (!event.path.includes(sortRef.current) && !open) {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				sortRef.current &&
+				!event.composedPath().includes(sortRef.current) &&
+				!open
+			) {
 				setOpen(false);
 			}
 			console.log(event);
