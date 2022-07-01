@@ -34,6 +34,7 @@ const Home: React.FC = () => {
 	};
 
 	const onPageNumberChange = (pageNumber: number) => {
+		console.log(pageNumber);
 		dispatch(setCurrentPage(pageNumber));
 	};
 

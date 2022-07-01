@@ -19,7 +19,9 @@ export const sortList: SortItem[] = [
 
 const Sorting: React.FC = () => {
 	const dispatch = useDispatch();
-	const sort = useSelector(selectSort);
+
+	const sort = useSelector(selectSort); // текущая сортировка
+
 	// состояние для popup
 	const [open, setOpen] = useState(false);
 	const sortRef = useRef<HTMLDivElement>(null);
@@ -34,7 +36,6 @@ const Sorting: React.FC = () => {
 			) {
 				setOpen(false);
 			}
-			console.log(event);
 		};
 		document.body.addEventListener("click", handleClickOutside);
 		return () => document.body.removeEventListener("click", handleClickOutside);
@@ -42,6 +43,7 @@ const Sorting: React.FC = () => {
 
 	// функция выбора свойства сортировки
 	const handleSelected = (obj: SortItem) => {
+		console.log(obj);
 		dispatch(setSort(obj));
 		setOpen(false);
 	};

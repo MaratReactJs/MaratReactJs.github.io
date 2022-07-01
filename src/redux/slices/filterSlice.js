@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// начальное состояние нашего state
+// начальное состояние нашего фильтра state
 const initialState = {
 	searchValue: "",
 	categoryId: 0,
@@ -17,20 +17,23 @@ const filterSlice = createSlice({
 	name: "filter",
 	initialState,
 	reducers: {
+		// изменение категории
 		setCategoryId(state, action) {
 			state.categoryId = action.payload;
 		},
-
+		// изменение в поле поиска
 		setSearchValue(state, action) {
 			state.searchValue = action.payload;
 		},
-
+		// изменение сортировки
 		setSort(state, action) {
 			state.sort = action.payload;
 		},
+		// изменение страницы
 		setCurrentPage(state, action) {
 			state.currentPage = action.payload;
 		},
+		// отправляются в qs, чтоб сохранить страницу с её фильтрами (страницей,сортировкой и категорией)
 		setFilters(state, action) {
 			state.currentPage = Number(action.payload.currentPage);
 			state.sort = action.payload.sort;
@@ -39,10 +42,11 @@ const filterSlice = createSlice({
 	},
 });
 
+// селектор экспортирует текущую сортировку
 export const selectSort = (state) => state.filterSlice.sort;
+// селектор экспортирует все данные из filterSlice
 export const selectFilter = (state) => state.filterSlice;
 
-// actions это  reducers, не знаю зачем переименуется здесь, Арчаков сам не знает
 export const {
 	setCategoryId,
 	setSort,

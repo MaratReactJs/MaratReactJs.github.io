@@ -12,6 +12,7 @@ const cartSlice = createSlice({
 	name: "cart",
 	initialState,
 	reducers: {
+		// увеличивает  на 1 count пиццы  внутри корзины
 		addItem(state, action) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 			if (findItem) {
@@ -26,7 +27,7 @@ const cartSlice = createSlice({
 				return sum + obj.price * obj.count;
 			}, 0);
 		},
-
+		// уменьшает  на 1 count пиццы  внутри корзины
 		minusItem(state, action) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
@@ -35,9 +36,11 @@ const cartSlice = createSlice({
 				state.totalPrice -= findItem.price;
 			}
 		},
+		// удаляет пиццу  из корзины
 		removeItem(state, action) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},
+		//удаляет все пиццы  из корзины
 		clearItem(state) {
 			state.items = [];
 			state.totalPrice = 0;
@@ -45,7 +48,10 @@ const cartSlice = createSlice({
 	},
 });
 
+// селектор экспортирует все данные из cartSlice
 export const selectCart = (state) => state.cartSlice;
+
+// селектор экспортрует добавленную пиццу в корзину
 export const selectCartItemById = (id) => (state) =>
 	state.cartSlice.items.find((obj) => obj.id === id);
 

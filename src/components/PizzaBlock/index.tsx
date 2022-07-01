@@ -25,7 +25,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	const pizzasType = ["тонкое", "традиционное"];
 
 	const dispatch = useDispatch();
-	const cartItem = useSelector(selectCartItemById(id));
+	const cartItem = useSelector(selectCartItemById(id)); // добавленная пицца в корзину
 
 	const addedCount = cartItem ? cartItem.count : 0;
 
