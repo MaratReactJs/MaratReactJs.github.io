@@ -7,12 +7,12 @@ import logoSVG from "../assets/img/pizza-logo.svg";
 import Search from "./Search";
 
 const Header: React.FC = () => {
-	const { items, totalPrice } = useSelector(selectCart);
+	const { items, totalPrice } = useSelector(selectCart); // вытаскиваем пиццы и сумму этих пицц из корзины
 	const totalItems = items.reduce(
 		(sum: number, item: any) => sum + item.count,
 		0
-	);
-	const { pathname } = useLocation();
+	); // общее количество в корзине
+	const { pathname } = useLocation(); // чтоб знать перешли ли мы в корзину
 
 	return (
 		<div className="header">

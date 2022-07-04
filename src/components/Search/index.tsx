@@ -7,20 +7,21 @@ import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
 const Search: React.FC = () => {
-	// отвечает за быстрое получение данных из инпут
-	const [value, setValue] = useState("");
-	const inputRef = useRef<HTMLInputElement>(null);
+	const [value, setValue] = useState(""); // значение поля поиска
+
+	const inputRef = useRef<HTMLInputElement>(null); // чтоб прикрепить к полю поиска фокус
+
 	const dispatch = useDispatch();
 
 	const onClickClear = () => {
-		dispatch(setSearchValue(""));
+		dispatch(setSearchValue("")); //state для поля поиска
 		setValue("");
 		inputRef.current?.focus();
 	};
 
 	const updateSearchValue = useCallback(
 		debounce((str) => {
-			console.log(str);
+			// debounce нужен чтоб назначить тайм-аут, чтоб поиск не срабатывал сразу после ввода значения
 			dispatch(setSearchValue(str));
 		}, 150),
 		[]

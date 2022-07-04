@@ -20,14 +20,14 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	sizes,
 	imageUrl,
 }) => {
-	const [activeType, setActiveType] = useState<number>(0);
-	const [activeSize, setActiveSize] = useState<number>(0);
+	const [activeType, setActiveType] = useState<number>(0); // выбор пиццы тонкая или традиционная
+	const [activeSize, setActiveSize] = useState<number>(0); //выбор размерам пиццы 26 30 40
 	const pizzasType = ["тонкое", "традиционное"];
 
 	const dispatch = useDispatch();
 	const cartItem = useSelector(selectCartItemById(id)); // добавленная пицца в корзину
 
-	const addedCount = cartItem ? cartItem.count : 0;
+	const addedCount = cartItem ? cartItem.count : 0; // добавление счетчика в кнопку добавить. По умолчанию его нет
 
 	const onClickAdd = () => {
 		const item = {
@@ -36,7 +36,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 			price,
 			imageUrl,
 			type: pizzasType[activeType],
-			size: sizes[activeSize],
+			size: sizes[activeSize], //sizes получаем с бэка
 		};
 		dispatch(addItem(item));
 	};

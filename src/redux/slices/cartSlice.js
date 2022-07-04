@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// начальное состояние нашего state
+// начальное состояние (state) итоговой цены и колличества шт в корзине
 const initialState = {
 	totalPrice: 0,
 	items: [],

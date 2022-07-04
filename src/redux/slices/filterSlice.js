@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// начальное состояние нашего фильтра state
+// начальное состояние (state) нашего фильтра
 const initialState = {
 	searchValue: "",
 	categoryId: 0,

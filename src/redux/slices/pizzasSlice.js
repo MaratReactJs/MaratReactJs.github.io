@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Redux не умеет работать в асинхронном режиме поэтому обработать запрос на поможет createAsyncThunk
 export const fetchPizzas = createAsyncThunk(
 	"pizza/fetchPizzasStatus",
 	async (params) => {
@@ -12,7 +13,7 @@ export const fetchPizzas = createAsyncThunk(
 	}
 );
 
-// начальное состояние нашего state
+// начальное состояние (state) пицц и их статус получения
 const initialState = {
 	items: [],
 	status: "loading", // loading,success, error
@@ -44,6 +45,7 @@ const pizzasSlice = createSlice({
 	},
 });
 
+// селектор для получения пицц и их статусы получения
 export const selectPizzas = (state) => state.pizzasSlice;
 
 // actions это  reducers, не знаю зачем переименуется здесь, Арчаков сам не знает

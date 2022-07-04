@@ -25,25 +25,27 @@ const Home: React.FC = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const urlParametr = useRef(false);
-	const firstRender = useRef(false);
+	const urlParametr = useRef(false); // для того чтобы показать есть ли сохранненые параметры страницы или нет
+	const firstRender = useRef(false); // для того чтобы знать когда был первый рендер страницы
 
+	// функция изменения категории
 	const onChangeCategory = (idx: number) => {
 		dispatch(setCategoryId(idx));
 		dispatch(setCurrentPage(1));
 	};
-
+	// функция изменения номера страницы
 	const onPageNumberChange = (pageNumber: number) => {
 		console.log(pageNumber);
 		dispatch(setCurrentPage(pageNumber));
 	};
 
 	const getPizzas = async () => {
+		// для начала корректируем данные
 		const sortBy = sort.sortProperty.replace("-", "");
 		const order = sort.sortProperty.includes("-") ? "asc" : "desc";
 		const category = categoryId > 0 ? `category=${categoryId}` : "";
 		const search = searchValue ? `search=${searchValue}` : "";
-
+		//теперь эти данные вставляем в функцию
 		dispatch(
 			//@ts-ignore
 			fetchPizzas({ sortBy, order, category, search, currentPage })

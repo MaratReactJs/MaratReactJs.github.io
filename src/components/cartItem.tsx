@@ -23,6 +23,8 @@ const CartItem: React.FC<CartItemProps> = ({
 	size,
 }) => {
 	const dispatch = useDispatch();
+
+	// удаление позиции из корзины
 	const onClickRemove = () => {
 		if (window.confirm("Ты действительно хочешь удалить товар")) {
 			dispatch(removeItem(id));

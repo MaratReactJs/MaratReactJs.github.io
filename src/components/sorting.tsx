@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort, selectSort } from "../redux/slices/filterSlice";
 
+// типы для сортировки
 type SortItem = {
 	name: string;
 	sortProperty: string;
@@ -19,11 +20,9 @@ export const sortList: SortItem[] = [
 
 const Sorting: React.FC = () => {
 	const dispatch = useDispatch();
-
 	const sort = useSelector(selectSort); // текущая сортировка
 
-	// состояние для popup
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false); // открыт ли popup или нет
 	const sortRef = useRef<HTMLDivElement>(null);
 
 	//закрытие popup при клике на другую область
