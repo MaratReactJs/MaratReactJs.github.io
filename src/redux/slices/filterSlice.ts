@@ -1,7 +1,19 @@
+import { RootState } from "./../store";
 import { createSlice } from "@reduxjs/toolkit";
 
+type SortType = {
+	name: string;
+	sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title"; // только такие значения можно вписать теперь
+};
+
+interface FilterSliceStateType {
+	searchValue: string;
+	categoryId: number;
+	currentPage: number;
+	sort: SortType;
+}
 // начальное состояние (state) нашего фильтра
-const initialState = {
+const initialState: FilterSliceStateType = {
 	searchValue: "",
 	categoryId: 0,
 	currentPage: 1,
@@ -43,9 +55,9 @@ const filterSlice = createSlice({
 });
 
 // селектор экспортирует текущую сортировку
-export const selectSort = (state) => state.filterSlice.sort;
+export const selectSort = (state: RootState) => state.filterSlice.sort;
 // селектор экспортирует все данные из filterSlice
-export const selectFilter = (state) => state.filterSlice;
+export const selectFilter = (state: RootState) => state.filterSlice;
 
 export const {
 	setCategoryId,

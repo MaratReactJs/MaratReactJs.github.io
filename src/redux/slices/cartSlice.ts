@@ -1,7 +1,24 @@
+import { RootState } from "./../store";
 import { createSlice } from "@reduxjs/toolkit";
 
+type CartItemType = {
+	id: string;
+	title: string;
+	price: number;
+	imageUrl: string;
+	count: number;
+	types: number[];
+	sizes: number[];
+};
+// type и interface в принципе похожи, только interface типизирует только объекты а type все
+// есть негласное правило типизировать state интерфэйсом
+interface CartSliceStateType {
+	totalPrice: number;
+	items: CartItemType[];
+}
+
 // начальное состояние (state) итоговой цены и колличества шт в корзине
-const initialState = {
+const initialState: CartSliceStateType = {
 	totalPrice: 0,
 	items: [],
 };
@@ -31,7 +48,7 @@ const cartSlice = createSlice({
 		minusItem(state, action) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
-			if (findItem.count > 0) {
+			if (findItem && findItem.count > 0) {
 				findItem.count--;
 				state.totalPrice -= findItem.price;
 			}
@@ -48,11 +65,11 @@ const cartSlice = createSlice({
 	},
 });
 
-// селектор экспортирует все данные из cartSlice
-export const selectCart = (state) => state.cartSlice;
+// селектор экспортирует все данные из cartSlice мы их получаем из store.tsx
+export const selectCart = (state: RootState) => state.cartSlice;
 
 // селектор экспортрует добавленную пиццу в корзину
-export const selectCartItemById = (id) => (state) =>
+export const selectCartItemById = (id: string) => (state: RootState) =>
 	state.cartSlice.items.find((obj) => obj.id === id);
 
 // actions это  reducers, не знаю зачем переименуется здесь, Арчаков сам не знает

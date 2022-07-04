@@ -9,7 +9,7 @@ import {
 	setCurrentPage,
 	setFilters,
 	selectFilter,
-} from "../redux/slices/filterSlice.js";
+} from "../redux/slices/filterSlice";
 import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice.js";
 
 import Sorting, { sortList } from "../components/sorting";
