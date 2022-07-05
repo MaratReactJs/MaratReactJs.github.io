@@ -1,5 +1,5 @@
 import { RootState } from "./../store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SortType = {
 	name: string;
@@ -30,23 +30,23 @@ const filterSlice = createSlice({
 	initialState,
 	reducers: {
 		// изменение категории
-		setCategoryId(state, action) {
+		setCategoryId(state, action: PayloadAction<number>) {
 			state.categoryId = action.payload;
 		},
 		// изменение в поле поиска
-		setSearchValue(state, action) {
+		setSearchValue(state, action: PayloadAction<string>) {
 			state.searchValue = action.payload;
 		},
 		// изменение сортировки
-		setSort(state, action) {
+		setSort(state, action: PayloadAction<SortType>) {
 			state.sort = action.payload;
 		},
 		// изменение страницы
-		setCurrentPage(state, action) {
+		setCurrentPage(state, action: PayloadAction<number>) {
 			state.currentPage = action.payload;
 		},
 		// отправляются в qs, чтоб сохранить страницу с её фильтрами (страницей,сортировкой и категорией)
-		setFilters(state, action) {
+		setFilters(state, action: PayloadAction<FilterSliceStateType>) {
 			state.currentPage = Number(action.payload.currentPage);
 			state.sort = action.payload.sort;
 			state.categoryId = Number(action.payload.categoryId);

@@ -1,14 +1,15 @@
 import { RootState } from "./../store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type CartItemType = {
+export type CartItemType = {
+	//экспортируем для items из функции addItems в PizzaBlock
 	id: string;
 	title: string;
 	price: number;
 	imageUrl: string;
 	count: number;
-	types: number[];
-	sizes: number[];
+	types: string;
+	sizes: number;
 };
 // type и interface в принципе похожи, только interface типизирует только объекты а type все
 // есть негласное правило типизировать state интерфэйсом
@@ -30,7 +31,7 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		// увеличивает  на 1 count пиццы  внутри корзины
-		addItem(state, action) {
+		addItem(state, action: PayloadAction<CartItemType>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 			if (findItem) {
 				findItem.count++;
@@ -45,8 +46,9 @@ const cartSlice = createSlice({
 			}, 0);
 		},
 		// уменьшает  на 1 count пиццы  внутри корзины
-		minusItem(state, action) {
-			const findItem = state.items.find((obj) => obj.id === action.payload.id);
+		minusItem(state, action: PayloadAction<string>) {
+			// тип string так как мы передаем только id
+			const findItem = state.items.find((obj) => obj.id === action.payload);
 
 			if (findItem && findItem.count > 0) {
 				findItem.count--;
@@ -54,7 +56,7 @@ const cartSlice = createSlice({
 			}
 		},
 		// удаляет пиццу  из корзины
-		removeItem(state, action) {
+		removeItem(state, action: PayloadAction<string>) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},
 		//удаляет все пиццы  из корзины
