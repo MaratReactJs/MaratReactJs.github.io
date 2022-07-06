@@ -8,7 +8,7 @@ type fetchPizzasArgsType = {
 	order: string;
 	category: string;
 	search: string;
-	currentPage: string;
+	currentPage: number;
 };
 
 type PizzaType = {
@@ -21,24 +21,31 @@ type PizzaType = {
 	rating: number;
 };
 
+// enum тайпскриптовая фишка
+export enum Status {
+	LOADING = "loading",
+	SUCCESS = "success",
+	ERROR = "error",
+}
+
 interface PizzaSliceStateType {
 	items: PizzaType[];
-	status: "loading" | "success" | "error";
+	status: Status;
 }
 
 // начальное состояние (state) пицц и их статус получения
 const initialState: PizzaSliceStateType = {
 	items: [],
-	status: "loading", // loading,success, error
+	status: Status.LOADING,
 };
 
 // Redux не умеет работать в асинхронном режиме поэтому обработать запрос на поможет createAsyncThunk
-export const fetchPizzas = createAsyncThunk<PizzaType[], fetchPizzasArgsType>(
+export const fetchPizzas = createAsyncThunk<PizzaType, fetchPizzasArgsType>(
 	"pizza/fetchPizzasStatus",
 	// можно было так сделать params:Record <string,string>
 	async (params) => {
 		const { sortBy, order, category, search, currentPage } = params;
-		const { data } = await axios.get<PizzaType[]>(
+		const { data } = await axios.get(
 			`https://628baebb667aea3a3e34800b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
 		);
 		return data; // можно было написать data:PizzaType[]
@@ -57,16 +64,16 @@ const pizzasSlice = createSlice({
 	},
 
 	extraReducers: (builder) => {
-		builder.addCase(fetchPizzas.pending, (state, action) => {
-			state.status = "loading";
+		builder.addCase(fetchPizzas.pending, (state) => {
+			state.status = Status.LOADING;
 			state.items = [];
 		});
 		builder.addCase(fetchPizzas.fulfilled, (state, action) => {
 			state.items = action.payload;
-			state.status = "success";
+			state.status = Status.SUCCESS;
 		});
 		builder.addCase(fetchPizzas.rejected, (state) => {
-			state.status = "error";
+			state.status = Status.SUCCESS;
 			state.items = [];
 		});
 	},

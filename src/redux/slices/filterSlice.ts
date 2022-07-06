@@ -6,7 +6,7 @@ type SortType = {
 	sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title"; // только такие значения можно вписать теперь
 };
 
-interface FilterSliceStateType {
+export interface FilterSliceStateType {
 	searchValue: string;
 	categoryId: number;
 	currentPage: number;

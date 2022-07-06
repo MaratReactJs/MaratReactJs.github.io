@@ -5,7 +5,7 @@ import { setSort, selectSort } from "../redux/slices/filterSlice";
 // типы для сортировки
 type SortItem = {
 	name: string;
-	sortProperty: string;
+	sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title"; // только такие значения можно вписать теперь
 };
 
 export const sortList: SortItem[] = [

@@ -46,9 +46,9 @@ const cartSlice = createSlice({
 			}, 0);
 		},
 		// уменьшает  на 1 count пиццы  внутри корзины
-		minusItem(state, action: PayloadAction<string>) {
+		minusItem(state, action: PayloadAction<CartItemType>) {
 			// тип string так как мы передаем только id
-			const findItem = state.items.find((obj) => obj.id === action.payload);
+			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
 			if (findItem && findItem.count > 0) {
 				findItem.count--;

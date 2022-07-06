@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
 import qs from "qs"; // для сохранения ссылок на страницу
@@ -17,13 +16,15 @@ import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/categories";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
+import { useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
 
 const Home: React.FC = () => {
 	const { categoryId, sort, currentPage, searchValue } =
 		useSelector(selectFilter);
 	const { items, status } = useSelector(selectPizzas);
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const urlParametr = useRef(false); // для того чтобы показать есть ли сохранненые параметры страницы или нет
 	const firstRender = useRef(false); // для того чтобы знать когда был первый рендер страницы
@@ -46,10 +47,7 @@ const Home: React.FC = () => {
 		const category = categoryId > 0 ? `category=${categoryId}` : "";
 		const search = searchValue ? `search=${searchValue}` : "";
 		//теперь эти данные вставляем в функцию
-		dispatch(
-			//@ts-ignore
-			fetchPizzas({ sortBy, order, category, search, currentPage })
-		);
+		dispatch(fetchPizzas({ sortBy, order, category, search, currentPage }));
 		window.scrollTo(0, 0);
 	};
 
@@ -60,6 +58,7 @@ const Home: React.FC = () => {
 			const sort = sortList.find(
 				(obj) => obj.sortProperty === params.sortProperty
 			);
+
 			dispatch(setFilters({ ...params, sort }));
 			urlParametr.current = true;
 		}

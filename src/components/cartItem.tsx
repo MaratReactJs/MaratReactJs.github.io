@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
 import { addItem, minusItem, removeItem } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "../redux/store";
 
 export type CartItemProps = {
 	id: string;
@@ -22,7 +22,7 @@ const CartItem: React.FC<CartItemProps> = ({
 	imageUrl,
 	size,
 }) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	// удаление позиции из корзины
 	const onClickRemove = () => {
