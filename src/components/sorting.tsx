@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { setSort, selectSort } from "../redux/slices/filterSlice";
+import {
+	setSort,
+	selectSort,
+	SortPropertyEnum,
+	SortType,
+} from "../redux/slices/filterSlice";
 
 // типы для сортировки
-type SortItem = {
-	name: string;
-	sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title"; // только такие значения можно вписать теперь
-};
 
-export const sortList: SortItem[] = [
+export const sortList: SortType[] = [
 	// с помощью минуса создаем уникальность
-	{ name: "популярности (DESC)", sortProperty: "rating" },
-	{ name: "популярности (ASC)", sortProperty: "-rating" },
-	{ name: "цене (DESC)", sortProperty: "price" },
-	{ name: "цене (ASC)", sortProperty: "-price" },
-	{ name: "алфавиту (DESC)", sortProperty: "title" },
-	{ name: "алфавиту (ASC)", sortProperty: "-title" },
+	{ name: "популярности (DESC)", sortProperty: SortPropertyEnum.RATING_DESC },
+	{ name: "популярности (ASC)", sortProperty: SortPropertyEnum.RATING_ASC },
+	{ name: "цене (DESC)", sortProperty: SortPropertyEnum.PRICE_DESC },
+	{ name: "цене (ASC)", sortProperty: SortPropertyEnum.PRICE_ASC },
+	{ name: "алфавиту (DESC)", sortProperty: SortPropertyEnum.TITLE_DESC },
+	{ name: "алфавиту (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 const Sorting: React.FC = () => {
@@ -41,7 +42,7 @@ const Sorting: React.FC = () => {
 	}, []);
 
 	// функция выбора свойства сортировки
-	const handleSelected = (obj: SortItem) => {
+	const handleSelected = (obj: SortType) => {
 		console.log(obj);
 		dispatch(setSort(obj));
 		setOpen(false);

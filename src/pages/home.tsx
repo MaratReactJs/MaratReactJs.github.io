@@ -8,8 +8,13 @@ import {
 	setCurrentPage,
 	setFilters,
 	selectFilter,
+	FilterSliceStateType,
 } from "../redux/slices/filterSlice";
-import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
+import {
+	fetchPizzas,
+	FetchPizzasArgsType,
+	selectPizzas,
+} from "../redux/slices/pizzasSlice";
 
 import Sorting, { sortList } from "../components/sorting";
 import PizzaBlock from "../components/PizzaBlock";
@@ -51,19 +56,6 @@ const Home: React.FC = () => {
 		window.scrollTo(0, 0);
 	};
 
-	// При первом рендере проверяет URL-параметры и сохраняет в redux
-	useEffect(() => {
-		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1));
-			const sort = sortList.find(
-				(obj) => obj.sortProperty === params.sortProperty
-			);
-
-			dispatch(setFilters({ ...params, sort }));
-			urlParametr.current = true;
-		}
-	}, []);
-
 	//Если изменили параметры и был первый рендер, вшивает в адресную строчку URL-параметры
 	useEffect(() => {
 		if (firstRender.current) {
@@ -72,7 +64,7 @@ const Home: React.FC = () => {
 				categoryId,
 				currentPage,
 			});
-			navigate(`?${queryString}`);
+			navigate(`/?${queryString}`);
 		}
 		firstRender.current = true;
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
@@ -84,6 +76,28 @@ const Home: React.FC = () => {
 		}
 		urlParametr.current = false;
 	}, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
+	// При первом рендере проверяет URL-параметры и сохраняет в redux тоесть парсит
+	useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(
+				window.location.search.substring(1)
+			) as unknown as FetchPizzasArgsType;
+
+			const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+
+			dispatch(
+				setFilters({
+					searchValue: params.search,
+					categoryId: Number(params.category),
+					currentPage: Number(params.currentPage),
+					sort: sort || sortList[0],
+				})
+			);
+
+			urlParametr.current = true;
+		}
+	}, []);
 
 	const skeletons = [...new Array(6)].map((_, index) => (
 		<Skeleton key={index} />

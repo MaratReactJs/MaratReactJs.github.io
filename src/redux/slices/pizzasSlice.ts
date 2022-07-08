@@ -1,8 +1,9 @@
 import { RootState } from "./../store";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { SortType } from "./filterSlice";
 
-type fetchPizzasArgsType = {
+export type FetchPizzasArgsType = {
 	// можно сократить код если знаешь что все свойства будут одинаковые Record <string,string> или Record <string,number> или Record <number,string>
 	sortBy: string;
 	order: string;
@@ -40,7 +41,7 @@ const initialState: PizzaSliceStateType = {
 };
 
 // Redux не умеет работать в асинхронном режиме поэтому обработать запрос на поможет createAsyncThunk
-export const fetchPizzas = createAsyncThunk<PizzaType, fetchPizzasArgsType>(
+export const fetchPizzas = createAsyncThunk<PizzaType[], FetchPizzasArgsType>(
 	"pizza/fetchPizzasStatus",
 	// можно было так сделать params:Record <string,string>
 	async (params) => {

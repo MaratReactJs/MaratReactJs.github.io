@@ -1,9 +1,18 @@
 import { RootState } from "./../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type SortType = {
+export enum SortPropertyEnum {
+	RATING_DESC = "rating",
+	RATING_ASC = "-rating",
+	PRICE_DESC = "price",
+	PRICE_ASC = "-price",
+	TITLE_DESC = "title",
+	TITLE_ASC = "-title",
+}
+
+export type SortType = {
 	name: string;
-	sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title"; // только такие значения можно вписать теперь
+	sortProperty: SortPropertyEnum;
 };
 
 export interface FilterSliceStateType {
@@ -19,7 +28,7 @@ const initialState: FilterSliceStateType = {
 	currentPage: 1,
 	sort: {
 		name: "популярности",
-		sortProperty: "rating",
+		sortProperty: SortPropertyEnum.RATING_DESC,
 	},
 };
 
@@ -47,9 +56,18 @@ const filterSlice = createSlice({
 		},
 		// отправляются в qs, чтоб сохранить страницу с её фильтрами (страницей,сортировкой и категорией)
 		setFilters(state, action: PayloadAction<FilterSliceStateType>) {
-			state.currentPage = Number(action.payload.currentPage);
-			state.sort = action.payload.sort;
-			state.categoryId = Number(action.payload.categoryId);
+			if (Object.keys(action.payload).length) {
+				state.currentPage = Number(action.payload.currentPage);
+				state.sort = action.payload.sort;
+				state.categoryId = Number(action.payload.categoryId);
+			} else {
+				state.currentPage = 1;
+				state.categoryId = 0;
+				state.sort = {
+					name: "популярности",
+					sortProperty: SortPropertyEnum.RATING_DESC,
+				};
+			}
 		},
 	},
 });
