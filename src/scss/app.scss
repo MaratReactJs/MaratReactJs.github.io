@@ -204,6 +204,27 @@ body {
 						display: none;
 					}
 				}
+
+				&-disabled {
+					opacity: 0.4;
+					border-color: #787878;
+
+					// клик
+					&:active {
+						transform: none; // анимация убераем визуальный клик
+					}
+					//наведение
+					&:hover {
+						background: transparent;
+						svg path {
+							fill: #787878;
+						}
+					}
+					// svg самого значка минус
+					svg path {
+						fill: #787878;
+					}
+				}
 			}
 
 			b {
