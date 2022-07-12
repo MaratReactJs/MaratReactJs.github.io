@@ -1,7 +1,6 @@
 import { RootState } from "./../store";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { SortType } from "./filterSlice";
 
 export type FetchPizzasArgsType = {
 	// можно сократить код если знаешь что все свойства будут одинаковые Record <string,string> или Record <string,number> или Record <number,string>

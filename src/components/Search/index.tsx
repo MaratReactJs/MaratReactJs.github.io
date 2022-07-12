@@ -21,9 +21,9 @@ const Search: React.FC = () => {
 
 	const updateSearchValue = useCallback(
 		debounce((str) => {
-			// debounce нужен чтоб назначить тайм-аут, чтоб поиск не срабатывал сразу после ввода значения
+			// debounce нужен чтоб назначить тайм-аут, чтоб поиск не срабатывал сразу после ввода значения и чтоб не было частых запросов к базе данных
 			dispatch(setSearchValue(str));
-		}, 150),
+		}, 300),
 		[]
 	);
 

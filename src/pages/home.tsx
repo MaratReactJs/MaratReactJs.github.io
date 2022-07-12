@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 // useSelector вытаскивает данные из хранилища
 // useDispatch говорит сделай что-то
 import qs from "qs"; // для сохранения ссылок на страницу
@@ -8,7 +8,6 @@ import {
 	setCurrentPage,
 	setFilters,
 	selectFilter,
-	FilterSliceStateType,
 } from "../redux/slices/filterSlice";
 import {
 	fetchPizzas,
@@ -34,11 +33,11 @@ const Home: React.FC = () => {
 	const urlParametr = useRef(false); // для того чтобы показать есть ли сохранненые параметры страницы или нет
 	const firstRender = useRef(false); // для того чтобы знать когда был первый рендер страницы
 
-	// функция изменения категории
-	const onChangeCategory = (idx: number) => {
+	// функция изменения категории, она каждый раз пересоздается когда компонент делает перерисовку
+	const onChangeCategory = useCallback((idx: number) => {
 		dispatch(setCategoryId(idx));
 		dispatch(setCurrentPage(1));
-	};
+	}, []);
 	// функция изменения номера страницы
 	const onPageNumberChange = (pageNumber: number) => {
 		console.log(pageNumber);
@@ -110,7 +109,7 @@ const Home: React.FC = () => {
 		<div className="container">
 			<div className="content__top">
 				<Categories value={categoryId} onChangeCategory={onChangeCategory} />
-				<Sorting />
+				<Sorting value={sort} />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			{status === "error" ? (

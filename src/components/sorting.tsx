@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux/es/exports";
 import {
 	setSort,
-	selectSort,
 	SortPropertyEnum,
 	SortType,
 } from "../redux/slices/filterSlice";
+import { useWhyDidYouUpdate } from "use-why-did-you-update";
 
 // типы для сортировки
+
+type SortingProps = {
+	value: SortType;
+};
 
 export const sortList: SortType[] = [
 	// с помощью минуса создаем уникальность
@@ -19,9 +23,10 @@ export const sortList: SortType[] = [
 	{ name: "алфавиту (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-const Sorting: React.FC = () => {
+const Sorting: React.FC<SortingProps> = memo(({ value }) => {
+	useWhyDidYouUpdate("Sorting", { value });
 	const dispatch = useDispatch();
-	const sort = useSelector(selectSort); // текущая сортировка
+	console.log("сортировка");
 
 	const [open, setOpen] = useState(false); // открыт ли popup или нет
 	const sortRef = useRef<HTMLDivElement>(null);
@@ -63,7 +68,7 @@ const Sorting: React.FC = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setOpen(!open)}>{sort.name}</span>
+				<span onClick={() => setOpen(!open)}>{value.name}</span>
 			</div>
 			{open && (
 				<div className="sort__popup">
@@ -74,7 +79,7 @@ const Sorting: React.FC = () => {
 									handleSelected(obj);
 								}}
 								className={
-									sort.sortProperty === obj.sortProperty ? "active" : ""
+									value.sortProperty === obj.sortProperty ? "active" : ""
 								}
 								key={i}>
 								{obj.name}
@@ -85,6 +90,6 @@ const Sorting: React.FC = () => {
 			)}
 		</div>
 	);
-};
+});
 
 export default Sorting;
