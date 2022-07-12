@@ -7,8 +7,7 @@ import {
 	setCategoryId,
 	setCurrentPage,
 	setFilters,
-	selectFilter,
-} from "../redux/slices/filterSlice";
+} from "../redux/filter/slice";
 import {
 	fetchPizzas,
 	FetchPizzasArgsType,
@@ -22,6 +21,7 @@ import Skeleton from "../components/PizzaBlock/skeleton";
 import Pagination from "../components/Pagination";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
+import { selectFilter } from "../redux/filter/selectors";
 
 const Home: React.FC = () => {
 	const { categoryId, sort, currentPage, searchValue } =

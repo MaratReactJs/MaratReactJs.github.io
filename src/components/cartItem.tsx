@@ -1,13 +1,10 @@
 import React from "react";
 import clsx from "clsx";
+import { useWhyDidYouUpdate } from "use-why-did-you-update";
 
-import {
-	addItem,
-	CartItemType,
-	minusItem,
-	removeItem,
-} from "../redux/slices/cartSlice";
+import { addItem, minusItem, removeItem } from "../redux/cart/slice";
 import { useAppDispatch } from "../redux/store";
+import { CartItemType } from "../redux/cart/type";
 
 export type CartItemProps = {
 	id: string;
@@ -29,7 +26,16 @@ const CartItem: React.FC<CartItemProps> = ({
 	sizes,
 }) => {
 	const dispatch = useAppDispatch();
-	console.log(sizes);
+
+	useWhyDidYouUpdate("CartItem", {
+		id,
+		title,
+		types,
+		price,
+		count,
+		imageUrl,
+		sizes,
+	});
 
 	// удаление позиции из корзины
 	const onClickRemove = () => {

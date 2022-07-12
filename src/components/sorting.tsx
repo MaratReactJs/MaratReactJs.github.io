@@ -1,11 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux/es/exports";
-import {
-	setSort,
-	SortPropertyEnum,
-	SortType,
-} from "../redux/slices/filterSlice";
-import { useWhyDidYouUpdate } from "use-why-did-you-update";
+import { setSort } from "../redux/filter/slice";
+import { SortPropertyEnum, SortType } from "../redux/filter/type";
 
 // типы для сортировки
 
@@ -24,9 +20,7 @@ export const sortList: SortType[] = [
 ];
 
 const Sorting: React.FC<SortingProps> = memo(({ value }) => {
-	useWhyDidYouUpdate("Sorting", { value });
 	const dispatch = useDispatch();
-	console.log("сортировка");
 
 	const [open, setOpen] = useState(false); // открыт ли popup или нет
 	const sortRef = useRef<HTMLDivElement>(null);

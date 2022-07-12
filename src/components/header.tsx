@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCart } from "../redux/slices/cartSlice";
+import { selectCart } from "../redux/cart/selectors";
 
 import logoSVG from "../assets/img/pizza-logo.svg";
 import Search from "./Search";
 
 const Header: React.FC = () => {
 	const { items, totalPrice } = useSelector(selectCart); // вытаскиваем пиццы и сумму этих пицц из корзины
+	const isMounted = useRef(false);
+
+	// при первом рендере проверяем есть ли пиццы в LS, если нет то закидываем их туда
+	useEffect(() => {
+		if (isMounted.current) {
+			const json = JSON.stringify(items);
+			localStorage.setItem("cart", json);
+		}
+		isMounted.current = true;
+	}, [items]);
+
 	const totalItems = items.reduce(
 		(sum: number, item: any) => sum + item.count,
 		0
