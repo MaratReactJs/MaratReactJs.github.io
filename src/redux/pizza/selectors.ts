@@ -1,4 +1,3 @@
-import pizzasSlice from "../slices/pizzasSlice";
 import { RootState } from "../store";
 
 // селектор для получения пицц и их статусы получения

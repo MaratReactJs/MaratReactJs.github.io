@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux/es/exports";
 import { setSort } from "../redux/filter/slice";
 import { SortPropertyEnum, SortType } from "../redux/filter/type";
 
-// типы для сортировки
-
 type SortingProps = {
 	value: SortType;
 };

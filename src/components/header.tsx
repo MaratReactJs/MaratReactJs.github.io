@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/cart/selectors";
-
 import logoSVG from "../assets/img/pizza-logo.svg";
 import Search from "./Search";
 
