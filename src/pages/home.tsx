@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useRef } from "react";
-// useSelector вытаскивает данные из хранилища
-// useDispatch говорит сделай что-то
 import qs from "qs"; // для сохранения ссылок на страницу
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,22 +7,26 @@ import {
 	setFilters,
 } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizza/slice";
-import Sorting, { sortList } from "../components/sorting";
-import PizzaBlock from "../components/PizzaBlock";
-import Categories from "../components/categories";
-import Skeleton from "../components/PizzaBlock/skeleton";
-import Pagination from "../components/Pagination";
+import {
+	PizzaBlock,
+	Categories,
+	Skeleton,
+	Pagination,
+	Sorting,
+} from "../components";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import { selectFilter } from "../redux/filter/selectors";
 import { selectPizzas } from "../redux/pizza/selectors";
 import { FetchPizzasArgsType } from "../redux/pizza/type";
+import { sortList } from "../components/sorting";
 
 const Home: React.FC = () => {
 	const { categoryId, sort, currentPage, searchValue } =
 		useSelector(selectFilter);
 	const { items, status } = useSelector(selectPizzas);
-
+	// useSelector вытаскивает данные из хранилища
+	// useDispatch говорит сделай что-то
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const urlParametr = useRef(false); // для того чтобы показать есть ли сохранненые параметры страницы или нет
