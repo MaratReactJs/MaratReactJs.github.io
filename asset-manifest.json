@@ -1,28 +1,28 @@
 {
   "files": {
-    "Cart.js": "/pepperoni/static/js/Cart.00e1c29c.chunk.js",
-    "Cart.js.map": "/pepperoni/static/js/Cart.00e1c29c.chunk.js.map",
+    "Cart.js": "/pepperoni/static/js/Cart.cc7f2149.chunk.js",
+    "Cart.js.map": "/pepperoni/static/js/Cart.cc7f2149.chunk.js.map",
     "FullPizza.js": "/pepperoni/static/js/FullPizza.6734f047.chunk.js",
     "FullPizza.js.map": "/pepperoni/static/js/FullPizza.6734f047.chunk.js.map",
     "NotFound.js": "/pepperoni/static/js/NotFound.0fcbdbcc.chunk.js",
     "NotFound.js.map": "/pepperoni/static/js/NotFound.0fcbdbcc.chunk.js.map",
     "main.css": "/pepperoni/static/css/main.ada55045.chunk.css",
-    "main.js": "/pepperoni/static/js/main.5abc2b03.chunk.js",
-    "main.js.map": "/pepperoni/static/js/main.5abc2b03.chunk.js.map",
-    "runtime-main.js": "/pepperoni/static/js/runtime-main.e185b320.js",
-    "runtime-main.js.map": "/pepperoni/static/js/runtime-main.e185b320.js.map",
-    "static/js/5.6e48f7cf.chunk.js": "/pepperoni/static/js/5.6e48f7cf.chunk.js",
-    "static/js/5.6e48f7cf.chunk.js.map": "/pepperoni/static/js/5.6e48f7cf.chunk.js.map",
+    "main.js": "/pepperoni/static/js/main.c10529e5.chunk.js",
+    "main.js.map": "/pepperoni/static/js/main.c10529e5.chunk.js.map",
+    "runtime-main.js": "/pepperoni/static/js/runtime-main.0bb71d2f.js",
+    "runtime-main.js.map": "/pepperoni/static/js/runtime-main.0bb71d2f.js.map",
+    "static/js/5.8dc158c4.chunk.js": "/pepperoni/static/js/5.8dc158c4.chunk.js",
+    "static/js/5.8dc158c4.chunk.js.map": "/pepperoni/static/js/5.8dc158c4.chunk.js.map",
     "index.html": "/pepperoni/index.html",
     "static/css/main.ada55045.chunk.css.map": "/pepperoni/static/css/main.ada55045.chunk.css.map",
-    "static/js/5.6e48f7cf.chunk.js.LICENSE.txt": "/pepperoni/static/js/5.6e48f7cf.chunk.js.LICENSE.txt",
+    "static/js/5.8dc158c4.chunk.js.LICENSE.txt": "/pepperoni/static/js/5.8dc158c4.chunk.js.LICENSE.txt",
     "static/media/empty-cart.db905d1f.png": "/pepperoni/static/media/empty-cart.db905d1f.png",
     "static/media/pizza-logo.56ac8703.svg": "/pepperoni/static/media/pizza-logo.56ac8703.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e185b320.js",
-    "static/js/5.6e48f7cf.chunk.js",
+    "static/js/runtime-main.0bb71d2f.js",
+    "static/js/5.8dc158c4.chunk.js",
     "static/css/main.ada55045.chunk.css",
-    "static/js/main.5abc2b03.chunk.js"
+    "static/js/main.c10529e5.chunk.js"
   ]
 }
