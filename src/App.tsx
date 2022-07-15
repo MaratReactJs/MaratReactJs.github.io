@@ -27,10 +27,10 @@ const NotFound = Loadable({
 const App = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<MainLayout />}>
-				<Route path="/" element={<Home />} />
+			<Route path="/pepperoni" element={<MainLayout />}>
+				<Route path="/pepperoni" element={<Home />} />
 				<Route
-					path="/cart"
+					path="/pepperoni/cart"
 					element={
 						<Suspense fallback={<div>Идет загрузка страницы...</div>}>
 							<Cart />
@@ -38,7 +38,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/pizza/:id"
+					path="/pepperoni/pizza/:id"
 					element={
 						<Suspense fallback={<div>Идет загрузка страницы...</div>}>
 							<FullPizza />
