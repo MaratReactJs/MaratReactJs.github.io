@@ -23,6 +23,7 @@ const NotFound = Loadable({
 	loader: () => import(/* webpackChunkName:"NotFound" */ "./pages/notFound"),
 	loading: () => <div>Идет загрузка страницы...</div>,
 });
+
 const App = () => {
 	return (
 		<Routes>
